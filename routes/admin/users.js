@@ -24,7 +24,6 @@ router.get('/new', function(req, res, next) {
 
 router.get('/edit/:id', function(req, res, next) {
     let c = req.app.db.collection('users');
-    console.log(req.params.id);
     c.findOne({_id: ObjectId(req.params.id)}, function(err, result) {
         res.render('admin/users/edit', {
             title: 'Edit User',

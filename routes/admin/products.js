@@ -65,7 +65,6 @@ router.post('/edit', function(req, res, next) {
     else {
         c.insertOne(req.body, function(err, result) {
             if (err) throw err;
-            console.log(result.insertedId);
             res.redirect('/admin/products/edit/'+result.insertedId);
         });
     }

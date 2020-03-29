@@ -81,7 +81,6 @@ router.get('/loginpassword', function(req, res, next) {
 router.post('/login/password/submit', function(req, res, next) {
     let c = req.app.db.collection('customers');
     c.findOne({email:req.session.customer.email}, (err, result) => {
-        console.log(result);
         if(!result) {
             req.session.customer = {
                 login: false,
@@ -91,7 +90,6 @@ router.post('/login/password/submit', function(req, res, next) {
         }
         else {
             // we have a user under that email so we compare the password
-            console.log(req.body.password, result.password);
             if(!!result.password){
                 bcrypt.compare(req.body.password, result.password)
                     .then((rslt) => {
