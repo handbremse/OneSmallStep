@@ -1,3 +1,4 @@
+![Image OneSmallStep](public/default/images/OneSmallStep.png)
 # OneSmallStep
 
 Extra fast Shop Software on Node & Express & Mongo
