@@ -1,0 +1,31 @@
+<h1>
+    {{title}}
+</h1>
+<div>
+    <p>
+        <a href="/admin/users/new">
+            <span data-feather="file-plus"></span>
+            New User
+        </a>
+    </p>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">E-Mail</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each users}}
+        <tr>
+            <th scope="row">{{this.name}}</th>
+            <td>{{this.email}}</td>
+            <td>
+                <a href="/admin/users/edit/{{this._id}}"><span data-feather="edit-2"></span> edit</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

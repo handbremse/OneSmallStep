@@ -1,0 +1,50 @@
+<h1>We choose to go to the Moon!</h1>
+<p>
+    We choose to go to the Moon in this decade and do the other things, not because they are easy, but because they are hard; because that goal will serve to organize and measure the best of our energies and skills, because that challenge is one that we are willing to accept, one we are unwilling to postpone, and one we intend to win, and the others, too.
+</p>
+
+<div class="container items">
+    {{#each products}}
+        <div class="item">
+            <a href="/artikel/{{this.permalink}}">
+                {{#if this.mainimage}}
+                    <img alt="{{this.name}}" src="/products/{{this.mainimage}}" width="300">
+                {{/if}}
+                <br>
+                <span class="head">
+                    {{{splitbrAtWordNum this.name 2}}}
+                </span><br>
+                <span class="shortd">
+                    {{this.shortdescription}}
+                </span><br>
+                <span class="price">
+                    {{toCurrency this.price}}
+                </span>
+                <br>
+            </a>
+        </div>
+    {{/each}}
+</div>
+
+<script>
+    var ___eP = JSON.parse('{{{jsons}}}');
+    let ___ePi = [];
+    ___eP.forEach(function (v, i) {
+        ___ePi.push(
+            {
+                'name': v.name,       // Name or ID is required.
+                'id': v.sku,
+                'price': v.price,
+                'brand': v.brand,
+                'position': i+1
+            }
+        );
+    });
+
+    ___eShop.push({
+        'ecommerce': {
+            'currencyCode': 'EUR',                       // Local currency is optional.
+            'impressions': ___ePi
+        }
+    });
+</script>

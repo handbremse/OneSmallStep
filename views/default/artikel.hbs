@@ -1,0 +1,52 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm">
+            {{#each product.images}}
+                <img alt="{{product.name}}" src="/products/{{this}}" width="300">
+            {{/each}}
+        </div>
+        <div class="col-sm">
+            <h1>{{product.name}}</h1>
+            <div>{{{product.description}}}</div>
+            <div>
+                <h3>
+                    {{toCurrency product.price}}
+                </h3>
+            </div>
+            <form action="/cart" id="form" method="post">
+                <input type="hidden" name="_id" value="{{{product._id}}}">
+                <input type="hidden" name="sku" value="{{{product.sku}}}">
+                <input type="hidden" name="name" value="{{{product.name}}}">
+                <input type="hidden" name="price" value="{{{product.price}}}">
+                <input type="hidden" name="mainimage" value="{{{product.mainimage}}}">
+                <input type="hidden" name="brand" value="{{{product.brand}}}">
+                <div class="form-group">
+                    <label for="qty" class="control-label">Quatity</label>
+                    <input name="qty" type="number" id="qty" class="form-control" value="1" required min="1" max="5">
+                </div>
+                <button class="btn btn-success btn-lg btn-block" type="submit"><i data-feather="plus-circle" style="position:relative;top:-3px"></i>&nbsp;&nbsp;Buy now</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    var ___eP = JSON.parse('{{{jsons}}}');
+    ___eShop.push({
+        'ecommerce': {
+            'detail': {
+                'actionField': {
+                    'list': 'ROOT'
+                },    // 'detail' actions have an optional list property.
+                'products': [{
+                    'name': ___eP.name,         // Name or ID is required.
+                    'id': ___eP.sku,
+                    'price': ___eP.price,
+                    'brand': ___eP.brand,
+                    'category': 'ROOT',
+                }]
+            }
+        }
+    });
+</script>
+

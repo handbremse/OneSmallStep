@@ -1,0 +1,79 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-5">
+            {{#if session.customer.invalidloginemail}}
+                <div class="alert alert-danger" role="alert">
+                    <h4>There was a problem</h4>
+                    <p>
+                        We cannot find an account with that email address
+                    </p>
+                </div>
+                <script>___eContainer.destroyCustomer=!0;</script>
+            {{/if}}
+            <div class="border rounded" style="padding: 30px">
+                <h1>Sign-In</h1>
+                <form action="/customer/login/email/submit" id="form" method="post">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Continue</button>
+                </form>
+                <div style="margin: 30px 0 0">
+                    <p>
+                        <small>
+                            By continuing, you agree to our
+                            <a href="/cou">Conditions of Use</a>
+                            and
+                            <a href="/privacy-note">Privacy Notice.</a>
+                        </small>
+                    </p>
+                    <p>
+                        <small>
+                            <a href="#" onclick="$('#tooglehelp').toggle(); return false;">Need help?</a><br>
+                            <span id="tooglehelp" style="display: none">
+                            <a href="/customer/forgotpassword">Forgot your password?</a><br>
+                            <a href="/customer/service">Other issues with Sign-In</a>
+                        </span>
+                        </small>
+                    </p>
+                </div>
+            </div>
+            <div style="margin: 30px 0 0">
+                <p class="text-center"><small>New here</small></p>
+                <a href="/customer/register" class="btn btn-block btn-secondary">Create your customer account</a>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    ___eContainer.validationCB = function() {
+        let $form = $('#form');
+        $(':submit', $form).on('click', function (e) {
+            let inter = '';
+            let valid = {
+                id: '#'+$form.attr('id'),
+                v: []
+            };
+            $('input', $form).each(function (v) {
+                let $t = $(this);
+                let name = $t.attr('name');
+                let value = $t.val();
+
+                if (/^email$/.test(name)) {
+                    // THX to https://emailregex.com/
+                    value = value.toString().trim();
+                    $t.val(value);
+                    !/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(value) && valid.v.push({
+                        name: 'email',
+                        error: 'Please enter a correct email'
+                    });
+                }
+            });
+            if (!!valid.v.length) {
+                e.preventDefault();
+                ___eContainer.validator.validFeedback(valid);
+            }
+        });
+    };
+</script>

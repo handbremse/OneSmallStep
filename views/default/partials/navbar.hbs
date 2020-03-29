@@ -1,0 +1,90 @@
+<nav>
+    <ul>
+        <li>
+            <a href="/">
+                <img id="brandtiny" src="/images/OneSmallStep.svg" alt="">
+            </a>
+        </li>
+        <li>
+            <a href="/spacecraft">
+                Spacecraft
+            </a>
+        </li>
+        <li>
+            <a href="/lunar-rover">
+                Lunar Rover
+            </a>
+        </li>
+        <li>
+            <a href="/apllo-lunar-module">
+                Apollo Lunar Module
+            </a>
+        </li>
+        <li>
+            <a href="/crew">
+                Crew
+            </a>
+        </li>
+        <li>
+            <a href="/shop">
+                Shop
+            </a>
+        </li>
+        <li>
+            <a href="#">
+                <i data-feather="search"></i>
+            </a>
+        </li>
+        <li>
+            <a href="#" class="TOGGLE" data-source="shoppingbag">
+                <i data-feather="shopping-bag"></i>
+            </a>
+            <div id="shoppingbag" class="HIDDEN">
+                <!--p>
+                    Your Bag is empty.
+                </p -->
+                <div>
+                    <ul>
+                        <li>
+                            <a href="/cart/">
+                                <i data-feather="shopping-bag"></i>
+                                Bag
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/customer/favorits/">
+                                <i data-feather="heart"></i>
+                                Favorites
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/customer/orders/">
+                                <i data-feather="tag"></i>
+                                Ordres
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/customer">
+                                <i data-feather="user"></i>
+                                Account
+                            </a>
+                        </li>
+                        <li>
+                            {{#if session.customer.login}}
+                                <a href="/customer/logout/">
+                                    <i data-feather="log-out"></i>
+                                    Log out
+                                </a>
+                            {{else}}
+                            <a href="/customer/login/">
+                                <i data-feather="log-in"></i>
+                                Sig in
+                            </a>
+                            {{/if}}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </li>
+    </ul>
+</nav>

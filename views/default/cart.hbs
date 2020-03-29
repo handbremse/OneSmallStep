@@ -1,0 +1,134 @@
+<h1>
+    Einkaufstasche
+</h1>
+{{#if cart.empty}}
+    <p>Noch nichts eingekauft</p>
+{{else}}
+    <table id="carttable" class="table">
+        <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col"></th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+            <th scope="col">Total</th>
+            <th scope="col"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each cart.items}}
+            <tr>
+                <th scope="row">{{this.name}}</th>
+                <td><img src="/products/{{this.mainimage}}"></td>
+                <td>{{this.qty}}</td>
+                <td>
+                    {{toCurrency this.price}}
+                </td>
+                <td>
+                    {{toCurrency this.subtotal}}
+                </td>
+                <td>
+                    <a href="/cart/edit/{{this.sku}}"><span data-feather="edit-2"></span> edi</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+                    <a href="/cart/remove/{{this.sku}}/qty/0"><span data-feather="trash-2"></span> remove</a>
+                </td>
+            </tr>
+        {{/each}}
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td>Total</td>
+            <td>
+                <strong>
+                    {{toCurrency cart.total}}
+                </strong>
+            </td>
+            <td></td>
+        </tr>
+        </tbody>
+    </table>
+    <a href="/checkout" class="btn btn-success btn-lg btn-block">
+        <i data-feather="shopping-cart"></i>&nbsp;&nbsp;&nbsp;Pay
+    </a>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.15/lodash.min.js"></script>
+    <script>
+        let ___eC = JSON.parse('{{{jsons}}}');
+        let ___eCo = JSON.parse(localStorage.getItem('_c'));
+        let ___eCItemsBalance = (function() {
+            let balance = {
+                add: {},
+                remove: {}
+            };
+            if(!___eCo) {
+                balance.add = ___eC.items;
+                return balance;
+            }
+            for(let k in ___eCo.items) {
+                balance.remove[k] = ___eCo.items[k];
+            }
+            for(let k in ___eC.items) {
+                if (!!balance.remove[k]) {
+                    if (balance.remove[k].qty < ___eC.items[k].qty) {
+                        balance.add[k] = _.cloneDeep(___eC.items[k]);
+                        balance.add[k].qty = ___eC.items[k].qty - balance.remove[k].qty;
+                        delete balance.remove[k];
+                    }
+                    else if (balance.remove[k].qty > ___eC.items[k].qty) {
+                        balance.remove[k].qty = balance.remove[k].qty - ___eC.items[k].qty;
+                    }
+                    else {
+                        delete balance.remove[k];
+                    }
+                }
+                else {
+                    balance.add[k] = ___eC.items[k];
+                }
+            }
+            return balance;
+        })();
+
+        if(!!_.size(___eCItemsBalance.add)) {
+            let add = {
+                products: []
+            };
+            _.forEach(___eCItemsBalance.add, function(v, k) {
+                add.products.push({
+                    'name': v.name,
+                    'id': v.sku,
+                    'price': v.price,
+                    'brand': v.brand,
+                    'quantity': v.qty
+                });
+            });
+            ___eShop.push({
+                'event': 'addToCart',
+                'ecommerce': {
+                    'currencyCode': 'EUR',
+                    'add': add
+                }
+            });
+        }
+        if(!!_.size(___eCItemsBalance.remove)) {
+            let remove = {
+                products: []
+            };
+            _.forEach(___eCItemsBalance.remove, function(v, k) {
+                remove.products.push({
+                    'name': v.name,
+                    'id': v.sku,
+                    'price': v.price,
+                    'brand': v.brand,
+                    'quantity': v.qty
+                });
+            });
+            ___eShop.push({
+                'event': 'removeFromCart',
+                'ecommerce': {
+                    'remove': remove
+                }
+            });
+        }
+
+        localStorage.setItem('_c', JSON.stringify(___eC) );
+    </script>
+{{/if}}

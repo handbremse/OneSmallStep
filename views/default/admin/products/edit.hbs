@@ -1,0 +1,115 @@
+<h1>
+    {{title}}
+</h1>
+
+
+
+<form class="form-horizontal" id="productNewForm" data-toggle="validator" action="/admin/products/edit/{{product.id}}" method="post">
+    {{#if product._id}}<input type="hidden" name="_id" value="{{product._id}}">{{/if}}
+    <div class="col-12">
+        <div class="form-group">
+            <label for="productTitle" class="control-label">Product title *</label>
+            <input name="name" type="text" id="productTitle" class="form-control" minlength="5" maxlength="200" value="{{product.name}}" required/>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="productPrice" class="control-label">Product price *</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">{{currency}}</label>
+                </div>
+                <input name="price" type="number" id="productPrice" class="form-control" step="any" value="{{product.price}}" required/>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="productPublished" class="control-label">Satus</label>
+            <select name="status" class="form-control" id="productPublished">
+                <option value="1" {{#if product.status}}selected{{/if}}>Published</option>
+                <option value="0" {{#unless product.status}}selected{{/unless}}>Draft</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group">
+            <label for="sku" class="control-label">SKU</label>
+            <input name="sku" type="text" id="brand" class="form-control" minlength="2" maxlength="200" value="{{product.sku}}" required/>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group">
+            <label for="brand" class="control-label">Brand</label>
+        <input name="brand" type="text" id="brand" class="form-control" minlength="2" maxlength="200" value="{{#if product.brand}}{{product.brand}}{{else}}NASA{{/if}}" required/>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group">
+            <label for="shortProductDescription" class="control-label">Short Description *</label>
+            <textarea name="shortdescription" minlength="5" rows="10" id="shortProductDescription" class="form-control" required>{{product.shortdescription}}</textarea>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group" id="editor-wrapper">
+            <label for="editor" class="control-label">Description *</label>
+            <textarea name="description" minlength="5" rows="10" id="productDescription" class="form-control" required>{{product.description}}</textarea>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group">
+            <label for="productPermalink" class="control-label">Permalink *</label>
+            <input name="permalink" type="text" id="productPermalink" class="form-control" minlength="5" maxlength="200" value="{{product.permalink}}" required/>
+        </div>
+    </div>
+    <div class="col-12">
+        <div id="product-images">
+            <h2>Product Images</h2>
+            <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#myModal">Upload Image</button>
+            {{#if product.images}}
+                <div class="row">
+                    {{#each product.images}}
+                        <div class="col-sm-3">
+                            <p>
+                                <a href="/admin/products/removeimage/{{../product._id}}/p/{{this}}" class="btn-delete-image btn btn-outline-danger">Delete</a>
+                            </p>
+                            <img src="/products/{{this}}" class="product-main-image img-fluid" alt="{{this}}">
+                        </div>
+                    {{/each}}
+                </div>
+            {{else}}
+                <h4 class="text-warning">No Images Uploaded</h4>
+            {{/if}}
+        </div>
+    </div>
+    <div class="col-12">
+        <button id="frm_edit_product_save" class="btn btn-primary btn-lg btn-block" type="submit">Update Product</button>
+    </div>
+    <div style="padding:40px">
+        &nbsp;
+    </div>
+</form>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" id="uploadForm" enctype="multipart/form-data" action="/admin/products/upload">
+                <input type="hidden" name="_id" value="{{product._id}}">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Product Image Upload</h4>
+                </div>
+                <div class="modal-body">
+                <span class="btn btn-outline-info btn-file">
+                    Select File <input type="file" name="uploadFile" id="uploadFile" accept=".gif,.jpg,.jpeg,.png,.svg">
+                </span>
+                    <input type="hidden" id="productId" name="productId" value="{{product._id}}"/>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" id="uploadButton" class="btn btn-outline-primary">Upload</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

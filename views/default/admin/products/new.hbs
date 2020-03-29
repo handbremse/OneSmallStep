@@ -1,0 +1,30 @@
+<h1>
+    {{title}}
+</h1>
+
+
+
+<form class="form-horizontal" id="productNewForm" data-toggle="validator" action="/admin/products/edit" method="post">
+    <div class="col-12">
+        <div class="form-group">
+            <label for="productTitle" class="control-label">Product title *</label>
+            <input name="name" type="text" id="productTitle" class="form-control" minlength="5" maxlength="200" value="" required/>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <div class="form-group">
+            <label for="productPrice" class="control-label">Product price *</label>
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <label class="input-group-text">{{currency}}</label>
+                </div>
+                <input name="price" type="number" id="productPrice" class="form-control" step="any" value="" required/>
+            </div>
+        </div>
+    </div>
+    <div class="col-12">
+        <input type="hidden" name="status" value="0">
+        <button id="frm_edit_product_save" class="btn btn-primary btn-lg btn-block" type="submit">Add product</button>
+    </div>
+
+</form>

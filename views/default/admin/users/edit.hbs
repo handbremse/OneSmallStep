@@ -1,0 +1,38 @@
+<h1>
+    {{title}}
+</h1>
+<form class="form-horizontal" id="productNewForm" data-toggle="validator" action="/admin/users/edit" method="post">
+    <div class="col-12">
+        <div class="form-group">
+            <label for="username" class="control-label">Name *</label>
+            <input name="name" type="text" id="username" class="form-control" minlength="5" maxlength="200" value="{{user.name}}" required/>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group">
+            <label for="useremail" class="control-label">E-Mail *</label>
+            <input name="email" type="email" id="useremail" class="form-control" minlength="5" maxlength="200" value="{{user.email}}" readonly/>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group">
+            <label for="userpasswordold" class="control-label">Password *</label>
+            <input name="passwordold" type="password" id="userpasswordold" class="form-control" minlength="5" maxlength="200" value="" required/>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group">
+            <label for="userpassword" class="control-label">Password *</label>
+            <input name="passwordnew" type="password" id="userpassword" class="form-control" minlength="5" maxlength="200" value="" required/>
+        </div>
+    </div>
+    <div class="col-12">
+        <div class="form-group">
+            <label for="userpasswordcompare" class="control-label">Password *</label>
+            <input name="passwordcompare" type="password" id="userpasswordcompare" class="form-control" minlength="5" maxlength="200" value="" required/>
+        </div>
+    </div>
+    <div class="col-12">
+        <button id="frm_edit_product_save" class="btn btn-primary btn-lg btn-block" type="submit">Updates user</button>
+    </div>
+</form>

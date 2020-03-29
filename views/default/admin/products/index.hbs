@@ -1,0 +1,35 @@
+<h1>
+    {{title}}
+</h1>
+
+<div>
+    <p>
+        <a href="/admin/products/new">
+            <span data-feather="file-plus"></span>
+            New Product
+        </a>
+    </p>
+</div>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+        <th scope="col">Status</th>
+    </tr>
+    </thead>
+    <tbody>
+    {{#each products}}
+        <tr>
+            <th scope="row">{{this.name}}</th>
+            <td>{{this.price}}</td>
+            <td>{{# if this.status}}Public{{else}}Draft{{/if}}</td>
+            <td>
+                <a href="/admin/products/edit/{{this._id}}"><span data-feather="edit-2"></span> edit</a>&nbsp&nbsp&nbsp&nbsp&nbsp
+                <a href="/admin/products/remove/{{this._id}}"><span data-feather="trash-2"></span> remove</a>
+            </td>
+        </tr>
+    {{/each}}
+    </tbody>
+</table>

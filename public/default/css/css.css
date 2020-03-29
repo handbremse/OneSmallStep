@@ -1,0 +1,121 @@
+html {
+    font-size: 1.2rem;;
+    line-height: 3.14286;
+    font-weight: 400;
+    letter-spacing: -.01em;
+}
+html, body {
+    font-family: "SF Pro Text", "Myriad Set Pro", "SF Pro Icons", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+nav {
+    background: rgba(0,0,0,0.8);
+    padding: 10px;
+    margin-bottom: 62px;
+    position: sticky;
+    top: 0px;
+    z-index: 10000000;
+}
+nav li {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    list-style-type:none;
+}
+nav ul {
+    width: 1200px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+nav a {
+    display: inline-block;
+    padding: 13px 24px;
+    color: rgb(245, 245, 247);
+    font-weight: 200;
+    letter-spacing:-0.14px;
+    font-size: 20px;
+}
+nav a:hover {
+    color: white;
+    text-decoration: none;
+}
+#brandtiny {
+    position: relative;
+    top: -3px;
+    width: 243px;
+}
+
+.items img {
+    filter: brightness(0.97);
+    -webkit-filter: brightness(0.97);
+}
+
+.items a {
+    display: inline-block;
+    background: #f7f7f7;
+    margin: 30px;
+    color: #888;
+    font-weight: 500;
+    font-size: 19px;
+    text-align: center;
+    padding: 82px;;
+}
+
+.items div.item {
+    display: inline-block;
+    width: 49%;
+}
+.item .shortd {
+    font-weight: 200;
+    font-size: 16px;
+    height: 150px;
+    overflow-x: scroll;
+    display: flex;
+}
+.item .head{
+    font-size: 30px;
+}
+
+.item .price {
+    width: 300px;
+    display: block;
+    text-align: right;
+}
+
+.HIDDEN {
+    display:none;
+}
+
+#shoppingbag {
+    position: absolute;
+    background: white;
+    border: 1px solid #000;
+    border-radius: 10px;
+    width: 200px;
+}
+#shoppingbag a {
+    color: #333;
+}
+#shoppingbag li {
+    display: block;
+}
+footer {
+    margin-top: 300px;
+    padding: 100px 0 0;
+    min-height: 600px;
+    background: #f5f5f7;
+    font-size: 14px;
+}
+footer p {
+    font-weight:600;
+}
+footer a {
+    color: #515154;
+}
+footer a:hover {
+    color: #1d1d1f;
+}
+
+#carttable img {
+    height: 100px;
+}
