@@ -7,7 +7,8 @@ module.exports.config = {
     },
     key: "Einstein",
     mongo: {
-        host: 'mongodb://localhost:27017'
+        host: 'mongodb://localhost:27017',
+        db: 'onesmallstep'
     },
     ssl: {
         active: false,

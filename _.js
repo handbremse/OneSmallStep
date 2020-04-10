@@ -35,7 +35,7 @@ app.config = config;
 client.connect(err => {
   assert.equal(null, err);
   console.log("Connected successfully to database");
-  const db = client.db('eshop');
+  const db = client.db(config.mongo.db);
   app.db = db;
   app.use((req, res, next) => {
     req.app = app;

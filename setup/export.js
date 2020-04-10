@@ -15,8 +15,8 @@ client.connect(err => {
     console.log("Connected successfully to database");
     const db = client.db('eshop');
     let collections = [
-        'users',
         'products'
+        //user will be done in import script
     ];
     let datas = [];
     let cnt = 0;

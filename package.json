@@ -1,11 +1,11 @@
 {
-  "name": "js_eshop",
-  "version": "1.0.0",
+  "name": "OneSmallStep",
+  "version": "0.8.5",
   "description": "",
   "main": "_.js",
   "scripts": {
     "start": "node _.js",
-    "postuninstall": "node /setup/setup.js"
+    "postuninstall": "node /setup/_.js"
   },
   "dependencies": {
     "bcrypt": "^4.0.1",

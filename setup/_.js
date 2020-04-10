@@ -20,9 +20,19 @@ const client = new MongoClient(config.mongo.host, {
 client.connect(err => {
     console.log("Connected to database");
     if(!!err)return console.error('NO DATABASE CONNECTION');
-    const db = client.db('eshop');
+    const db = client.db('onesmallstep');
     console.log("read install file");
     let datas = JSON.parse(fs.readFileSync('./setup/sample_db.txt'));
+    datas.push({ //add a sample User admin@admin.admin // admin
+        collection: "users",
+        data: [
+            {
+                name: "Admin Admin",
+                email: "admin@admin.admin",
+                password: "$2b$10$8hGYxdwFK8onbI/nGloVeOaDPoM17eZ4rk0VT6upshnBdj.Em/b6a"
+            }
+        ]
+    });
     let cnt = 0;
     let limit = 0;
     console.log("counting documents");
