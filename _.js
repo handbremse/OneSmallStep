@@ -87,14 +87,20 @@ app.use(function(req, res, next) {
 });
  */
 
-app.use('/', require('./routes/index'));
-app.use('/customer', require('./routes/customer'));
-app.use('/admin', require('./routes/admin'));
-app.use('/admin/products', require('./routes/admin/products'));
-app.use('/admin/orders', require('./routes/admin/orders'));
-app.use('/admin/customers', require('./routes/admin/customers'));
-app.use('/admin/dashboard', require('./routes/admin/dashboard'));
-app.use('/admin/users', require('./routes/admin/users'));
+// Setup Routes by walking recursive through routes
+const setupRoutes = d => {
+    if(fs.statSync(d).isDirectory()) {
+        fs.readdirSync(d).forEach(v => {
+            setupRoutes(path.join(d, v));
+        });
+    }
+    else {
+        let p = d.replace(/routes|_|\.js/g, '').split(path.sep).join('/');
+        let f = path.join(__dirname, d);
+        app.use(p, require(f));
+    }
+};
+setupRoutes('routes');
 
 
 // error handler
