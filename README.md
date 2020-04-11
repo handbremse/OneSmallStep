@@ -3,6 +3,8 @@
 
 Extra fast Shop Software on Node & Express & Mongo
 
+Pure Javascript! Without fat Framesworks! No overhead! 
+
 # On your Mashine
 
 ## Node
