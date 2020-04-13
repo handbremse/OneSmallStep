@@ -1,0 +1,68 @@
+<div class="container">
+    <h1>
+        Your Order is placed
+    </h1>
+
+    <p>
+        {{customer.name}}
+    </p>
+    <h2>
+        Payment
+    </h2>
+    <p>
+        {{order.payment}}
+    </p>
+    <h2>
+        Shipping
+    </h2>
+    <div>
+        <p>
+            {{order.addresses.name}}<br>
+            {{order.addresses.street}}<br>
+            {{order.addresses.zip}} {{order.addresses.city}}<br>
+            {{order.addresses.country}}
+        </p>
+    </div>
+    <div>
+        <h2>
+            Items
+        </h2>
+        <table id="carttable" class="table">
+            <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col"></th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Price</th>
+                <th scope="col">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each order.items}}
+                <tr>
+                    <th scope="row">{{this.name}}</th>
+                    <td><img src="/products/{{this.mainimage}}"></td>
+                    <td>{{this.qty}}</td>
+                    <td>
+                        {{toCurrency this.price}}
+                    </td>
+                    <td>
+                        {{toCurrency this.subtotal}}
+                    </td>
+                </tr>
+            {{/each}}
+            <tr>
+                <td></td>
+                <td></td>
+                <td>Total</td>
+                <td>
+                    <strong>
+                        {{toCurrency order.total}}
+                    </strong>
+                </td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

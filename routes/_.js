@@ -6,12 +6,14 @@ const ld = require('lodash')
 
 router.get('/', function(req, res, next) {
   // some Session things
+  console.log(req.session, req.sessionID);
   next();
 });
 
 router.get('/', function(req, res, next) {
   res.render('index', {
-    title: 'Homepage'
+    title: 'Homepage',
+    session: req.session
   });
 });
 
@@ -25,6 +27,7 @@ router.get('/shop', function(req, res, next) {
     });
     res.render('shop', {
       title: 'Category Page',
+      session: req.session,
       products: result,
       jsons: JSON.stringify(j)
     });
@@ -38,96 +41,9 @@ router.get('/artikel/:id', function(req, res, next) {
     let j = clean(result);
     res.render('artikel', {
       title: 'Product Page',
+      session: req.session,
       product: result,
       jsons: JSON.stringify(j)
-    });
-  });
-});
-
-router.post('/cart', function(req, res, next) {
-  // make an item
-  let items  = {};
-  items[req.body.sku] = req.body;
-  items[req.body.sku].create = new Date().getTime();
-  items[req.body.sku].update = new Date().getTime();
-  items[req.body.sku].qty = parseInt(req.body.qty, 10);
-  items[req.body.sku].price = parseFloat(req.body.price);
-  // call DB
-  let c = req.app.db.collection('carts');
-  c.findOne({sid: req.sessionID}, function(err, result) {
-    if (!!result) {
-      // there is a cart
-      // there is an item
-      if (!!result.items[req.body.sku]) {
-        let qty = result.items[req.body.sku].qty + parseInt(req.body.qty, 10); //update qty
-        let create = result.items[req.body.sku].create; // prevent create
-        result.items[req.body.sku] = items[req.body.sku];
-        result.items[req.body.sku].create = create;
-        result.items[req.body.sku].qty = qty;
-      }
-      // there is no item
-      else {
-        result.items[req.body.sku] = items[req.body.sku];
-      }
-      result.update = new Date().getTime();
-      c.updateOne({_id: ObjectId(result._id)}, {$set: result}, function (err, result) {
-        res.redirect('/cart');
-      });
-    } // there is no cart
-    else {
-      let cart = {
-        sid: req.sessionID,
-        create: new Date().getTime(),
-        update: new Date().getTime(),
-        items: items //the items
-      };
-      c.insertOne(cart, function (err, result) {
-        if (err) throw err;
-        res.redirect('/cart');
-      });
-    }
-  });
-});
-
-router.get('/cart', function(req, res, next) {
-  let c = req.app.db.collection('carts');
-  c.findOne({sid: req.sessionID}, function(err, result) {
-    // only if there is an cart with items
-    if(!!result && !!ld.size(result.items)){
-      result.total = 0;
-      ld.forEach(result.items, function (v, k) {
-        v.subtotal = v.qty * v.price;
-        result.total+=v.subtotal;
-      });
-    }
-    else {
-      result = {
-        empty: true
-      }
-    }
-    res.render('cart', {
-      title: 'Cart',
-      sessionid: req.session,
-      cart: result,
-      jsons: JSON.stringify(result)
-    });
-  });
-});
-
-router.get('/cart/edit/:id', function(req, res, next) {
-  let c = req.app.db.collection('products');
-  c.findOne({sku: req.params.id}, function(err, result) {
-    res.redirect('/artikel/' + result.permalink);
-  });
-});
-
-router.get('/cart/remove/:id/qty/:qty', function(req, res, next) {
-  let c = req.app.db.collection('carts');
-  c.findOne({sid: req.sessionID}, function(err, result) {
-    if(req.params.qty == 0)delete result.items[req.params.id];
-    else result.items[req.params.id].qty = parseInt(req.params.qty);
-    c.updateOne({_id: ObjectId(result._id)}, {$set: result}, function(err, result) {
-      res.redirect('/cart');
     });
   });
 });

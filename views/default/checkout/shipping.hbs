@@ -1,0 +1,42 @@
+<div class="container">
+    <h1>
+        Select a delivery address
+    </h1>
+    {{customer.name}}
+
+    <div>
+        {{customer.addresses}}
+    </div>
+
+    <form action="/checkout/shipping/check" id="form" method="post">
+        <input type="hidden" name="_redirect" value="/checkout/payment">
+        <input type="hidden" name="" value="/checkout/payment">
+        <div class="form-group">
+            <label for="street">Full Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Your Full Name" value="{{customer.name}}" required>
+        </div>
+        <div class="form-group">
+            <label for="street">Street</label>
+            <input type="text" class="form-control" id="street" name="street" placeholder="Street" required>
+        </div>
+        <div class="form-group">
+            <label for="name">Zip</label>
+            <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip" required>
+        </div>
+        <div class="form-group">
+            <label for="name">City</label>
+            <input type="text" class="form-control" id="city" name="city" placeholder="City" required>
+        </div>
+        <div class="form-group">
+            <label for="country">Country</label>
+            <select class="form-control" id="country" name="country">
+                <option>USA</option>
+                <option>Deutschland</option>
+                <option>Россия</option>
+                <option>中国</option>
+                <option>भारत गणराज्य</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Add This Address</button>
+    </form>
+</div>

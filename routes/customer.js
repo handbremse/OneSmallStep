@@ -3,10 +3,12 @@ const router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
 const clean = require('../helpers/clean');
 const bcrypt = require('bcrypt');
+const mergecarts = require('../helpers/mergecarts');
 
 
 router.get('/', function(req, res, next) {
     // some Session things
+    console.log(req.session, req.sessionID);
     next();
 });
 
@@ -34,14 +36,20 @@ router.post('/register/submit', function(req, res, next) {
                 req.body.password = hash;
                 delete req.body.repeatpassword;
                 c.insertOne(req.body, function(err, result) {
+                    // !!!! LOGIN
                     if(err)console.error(err);
                     req.session.customer = {
                         login: true,
                         email: req.body.email,
                         name: req.body.firstname + ' ' + req.body.name,
+                        id: result.ops[0]._id.toString(),
                         invalidregisteremail: false
                     };
-                    res.redirect('/customer/account/');
+                    //merging the carts
+                    let c = req.app.db.collection('carts');
+                    mergecarts(c, req.sessionID, req.session.customer.id, (err, result) => {
+                        res.redirect('/customer/account');
+                    });
                 });
             });
         }
@@ -58,6 +66,13 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.get('/account', function(req, res, next) {
+    // after login or register goto afterlogin if needes => checkout.js
+    if(!!req.session.afterlogin){
+        let r = req.session.afterlogin;
+        delete req.session.afterlogin;
+        res.redirect(r);
+        return;
+    }
     res.render('customer/account', {
         title: 'Customer Account',
         session: req.session
@@ -89,18 +104,24 @@ router.post('/login/password/submit', function(req, res, next) {
             res.redirect('/customer/login');
         }
         else {
-            // we have a user under that email so we compare the password
+            // we have a user with that email so we compare the password
             if(!!result.password){
                 bcrypt.compare(req.body.password, result.password)
                     .then((rslt) => {
                         if(rslt){
+                            //LOGIN!!!!!!!
                             req.session.customer = {
                                 email: result.email,
                                 name: result.firstname + ' ' + result.name,
                                 login: true,
+                                id: result._id.toString(),
                                 invalidloginpassword: false,
                             };
-                            res.redirect('/customer/account');
+                            //merging the carts
+                            let c = req.app.db.collection('carts');
+                            mergecarts(c, req.sessionID, req.session.customer.id, (err, result) => {
+                                res.redirect('/customer/account');
+                            });
                         }
                         else {
                             req.session.customer.invalidloginpassword = true;

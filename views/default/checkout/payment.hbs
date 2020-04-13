@@ -1,0 +1,29 @@
+<div class="container">
+    <h1>
+        Select your Payment
+    </h1>
+    {{customer.name}}
+
+
+    <form action="/checkout/payment/check" id="form" method="post">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="payment" id="invoice" value="invoice" checked>
+            <label class="form-check-label" for="invoice">
+                Invoice
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="payment" id="prepayment" value="prepayment">
+            <label class="form-check-label" for="prepayment">
+                Prepayment
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="payment" id="paypal" value="paypal">
+            <label class="form-check-label" for="paypal">
+                PayPal
+            </label>
+        </div>
+        <button type="submit" class="btn btn-success btn-block">Next</button>
+    </form>
+</div>
