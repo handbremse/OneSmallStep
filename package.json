@@ -18,7 +18,7 @@
     "express-session": "^1.17.0",
     "hbs": "^4.1.0",
     "http-errors": "~1.6.3",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "minimist": "^1.2.5",
     "mongo-sanitize": "^1.1.0",
     "mongodb": "^3.5.5",
